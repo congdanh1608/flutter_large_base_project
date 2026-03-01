@@ -25,26 +25,94 @@ A production-ready Flutter boilerplate for **medium and large** applications, ta
 ```
 lib/
 ├── core/
-│   ├── config/       # AppFlavor, AppConstants
-│   ├── error/        # Failure sealed class, ErrorMapper
-│   ├── extensions/   # String, int, Iterable, Color extensions
-│   ├── l10n/         # (generated) Localization helper
-│   ├── network/      # DioClient, interceptors, ApiResult<T>
-│   ├── router/       # AppRouter (GoRouter), RouteNames
-│   ├── storage/      # AppPreferences, SecureStorageService, HiveService
-│   ├── theme/        # AppTheme (light + dark, Material3)
-│   └── utils/        # AppLogger
+│   ├── config/
+│   │   ├── app_constants.dart        # Timeouts, pagination, storage keys, Hive box names
+│   │   ├── app_flavor.dart           # FlavorConfig — dev / prod base URLs & app names
+│   │   └── flavor_banner.dart        # Visual dev/prod overlay banner
+│   ├── error/
+│   │   ├── error_mapper.dart         # DioException → Failure mapping
+│   │   └── failures.dart             # Sealed Failure hierarchy (Network, Server, Unauthorized…)
+│   ├── extensions/
+│   │   └── extensions.dart           # String, int, double, Iterable, Color extensions
+│   ├── network/
+│   │   ├── api_paths.dart            # API endpoint constants
+│   │   ├── api_result.dart           # ApiResult<T> sealed union (ApiSuccess / ApiFailure)
+│   │   ├── dio_client.dart           # Singleton Dio factory with interceptors
+│   │   ├── api_service/
+│   │   │   └── auth_api_service.dart         # Raw Retrofit API calls
+│   │   ├── api_service_provider/
+│   │   │   └── auth_api_service_provider.dart # Orchestrator — wraps calls in ApiResult<T>
+│   │   └── interceptors/
+│   │       ├── auth_interceptor.dart         # Bearer token attach + 401 silent refresh
+│   │       ├── error_interceptor.dart        # DioException → Failure
+│   │       └── logging_interceptor.dart      # Request / response logging
+│   ├── router/
+│   │   ├── app_router.dart           # GoRouter config, error handler
+│   │   └── route_names.dart          # Path + named route constants
+│   ├── storage/
+│   │   ├── app_preferences.dart      # SharedPreferences (theme mode, onboarded flag)
+│   │   ├── hive_service.dart         # Hive CE init + box access
+│   │   └── secure_storage_service.dart # FlutterSecureStorage (access / refresh tokens)
+│   ├── theme/
+│   │   └── app_theme.dart            # Material3 light + dark themes (Poppins)
+│   └── utils/
+│       └── app_logger.dart           # Flavor-aware logger wrapper
 ├── features/
-│   └── [feature_name]/
-│       ├── data/         # Models (manual JSON), datasources, repo impls
-│       ├── domain/       # Entities, repo interfaces, use cases
-│       └── presentation/ # Riverpod providers, screens, widgets
+│   ├── auth/
+│   │   ├── providers/
+│   │   │   └── auth_provider.dart    # AuthNotifier (login, logout, getCurrentUser)
+│   │   └── screens/
+│   │       └── login_screen.dart     # ReactiveForm login UI
+│   ├── home/
+│   │   ├── presentation/screens/
+│   │   │   └── home_screen.dart      # User profile display
+│   │   └── screens/
+│   │       └── paging_example_screen.dart # Infinite scroll pagination example
+│   └── splash/
+│       └── screens/
+│           └── splash_screen.dart    # Auth check + redirect
 ├── shared/
-│   ├── providers/    # ThemeModeProvider
-│   └── widgets/      # AppButton, AppTextField, AppLoading, Splash, 404
-├── l10n/             # ARB translation files
-├── app.dart          # Root MaterialApp.router
-└── main.dart         # Bootstrap: Hive + SharedPrefs init, ProviderScope
+│   ├── providers/
+│   │   └── theme_provider.dart       # ThemeModeNotifier (light / dark / system)
+│   ├── states/
+│   │   └── base_state.dart           # BaseState — isLoading, errorMessage, hasError
+│   └── widgets/
+│       ├── app_button.dart           # Primary button with loading state
+│       ├── app_loading.dart          # AppLoading + AppShimmer
+│       ├── not_found_screen.dart     # 404 screen
+│       ├── paging/
+│       │   └── paging_indicators.dart # Skeleton, error, no-items states
+│       └── reactive_forms/           # Typed ReactiveForm field wrappers
+│           ├── custom_reactive_text_field.dart
+│           ├── custom_reactive_single_select_dropdown.dart
+│           ├── custom_reactive_multiple_select_dropdown.dart
+│           ├── custom_reactive_searchable_dropdown.dart
+│           ├── custom_reactive_date_picker.dart
+│           ├── custom_reactive_radio_tile.dart
+│           └── custom_reactive_switch.dart
+├── models/
+│   └── user_model.dart               # UserModel with fromJson / toJson
+├── l10n/
+│   ├── app_en.arb                    # English ARB source
+│   ├── app_localizations.dart        # (generated)
+│   └── app_localizations_en.dart     # (generated)
+├── app.dart                          # Root MaterialApp.router
+└── main.dart                         # Bootstrap: Hive + SharedPrefs init, ProviderScope
+```
+
+### iOS flavor xcconfigs
+
+```
+ios/Flutter/
+├── Debug.xcconfig          # Standard debug (no flavor)
+├── Release.xcconfig        # Standard release (no flavor)
+├── Debug-dev.xcconfig      # Debug + dev flavor
+├── Release-dev.xcconfig    # Release + dev flavor
+├── Debug-prod.xcconfig     # Debug + prod flavor
+├── Release-prod.xcconfig   # Release + prod flavor
+├── dev.xcconfig            # Dev flavor overrides (bundle ID, display name)
+├── prod.xcconfig           # Prod flavor overrides (bundle ID, display name)
+└── Generated.xcconfig      # Auto-generated by Flutter — do not edit
 ```
 
 ---
@@ -109,7 +177,7 @@ lib/features/my_feature/
 **Wire the provider:**
 ```dart
 final myFeatureRepoProvider = Provider<MyFeatureRepository>(
-  (_) => MyFeatureRepositoryImpl(),
+      (_) => MyFeatureRepositoryImpl(),
 );
 ```
 
