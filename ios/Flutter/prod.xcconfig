@@ -6,5 +6,3 @@ APP_DISPLAY_NAME = DTDigitalStudio
 // Production bundle ID
 PRODUCT_BUNDLE_IDENTIFIER = com.dtdigitalstudio.dt_digital_studio
 
-// Pass FLAVOR to Dart via dart-define (consumed by FlavorConfig)
-DART_DEFINES = FLAVOR=prod
