@@ -1,0 +1,37 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Clean code
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_final_fields
+    - prefer_final_locals
+    - unnecessary_const
+    - unnecessary_new
+    - use_named_constants
+    - avoid_print
+
+    # Null safety
+    - avoid_null_checks_in_equality_operators
+    - unnecessary_null_checks
+
+    # Error handling
+    - unawaited_futures
+    - always_declare_return_types
+
+    # Naming
+    - file_names
+    - non_constant_identifier_names
+
+    # Collections
+    - prefer_collection_literals
+    - avoid_empty_else
+
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - lib/gen/**

@@ -1,0 +1,11 @@
+// Dev flavor build settings — included by Debug-dev and Release-dev configurations.
+// Overrides PRODUCT_BUNDLE_IDENTIFIER and APP_DISPLAY_NAME for the dev environment.
+
+// App display name shown on home screen
+APP_DISPLAY_NAME = [DEV] DTDigitalStudio
+
+// Bundle ID — uses .dev suffix so dev & prod can coexist on device
+PRODUCT_BUNDLE_IDENTIFIER = com.dtdigitalstudio.dt_digital_studio.dev
+
+// Pass FLAVOR to Dart via dart-define (consumed by FlavorConfig)
+DART_DEFINES = FLAVOR=dev

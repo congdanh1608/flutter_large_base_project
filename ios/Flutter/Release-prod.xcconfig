@@ -1,0 +1,6 @@
+// Release configuration for the prod flavor.
+// Chains: Pods release xcconfig → Flutter Generated → prod flavor overrides
+
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+#include "prod.xcconfig"

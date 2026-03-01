@@ -1,0 +1,6 @@
+// Release configuration for the dev flavor.
+// Chains: Pods release xcconfig → Flutter Generated → dev flavor overrides
+
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+#include "dev.xcconfig"

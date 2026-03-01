@@ -1,0 +1,65 @@
+{
+  "@@locale": "en",
+  "appName": "DTDigitalStudio",
+  "@appName": { "description": "The application name" },
+
+  "loading": "Loading...",
+  "@loading": { "description": "Generic loading text" },
+
+  "retry": "Retry",
+  "@retry": { "description": "Button label to retry a failed action" },
+
+  "cancel": "Cancel",
+  "@cancel": { "description": "Generic cancel button label" },
+
+  "confirm": "Confirm",
+  "@confirm": { "description": "Generic confirm button label" },
+
+  "save": "Save",
+  "@save": { "description": "Generic save button label" },
+
+  "delete": "Delete",
+  "@delete": { "description": "Generic delete button label" },
+
+  "back": "Back",
+  "@back": { "description": "Generic back navigation label" },
+
+  "errorGeneral": "Something went wrong. Please try again.",
+  "@errorGeneral": { "description": "Generic error message" },
+
+  "errorNetwork": "No internet connection. Please check your network.",
+  "@errorNetwork": { "description": "Network error message" },
+
+  "errorUnauthorized": "Session expired. Please login again.",
+  "@errorUnauthorized": { "description": "Unauthorized/token expired error" },
+
+  "errorNotFound": "Page not found.",
+  "@errorNotFound": { "description": "404 error message" },
+
+  "loginTitle": "Welcome back",
+  "@loginTitle": { "description": "Title on login screen" },
+
+  "loginSubtitle": "Sign in to your account",
+  "@loginSubtitle": { "description": "Subtitle on login screen" },
+
+  "loginEmail": "Email",
+  "@loginEmail": { "description": "Email field label on login screen" },
+
+  "loginPassword": "Password",
+  "@loginPassword": { "description": "Password field label on login screen" },
+
+  "loginButton": "Sign In",
+  "@loginButton": { "description": "Login button label" },
+
+  "loginForgotPassword": "Forgot password?",
+  "@loginForgotPassword": { "description": "Forgot password link label" },
+
+  "homeTitle": "Home",
+  "@homeTitle": { "description": "Title on home screen" },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": { "description": "Title on settings screen" },
+
+  "logout": "Logout",
+  "@logout": { "description": "Logout action label" }
+}

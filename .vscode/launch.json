@@ -1,0 +1,34 @@
+{
+    // Requires the Dart VS Code extension.
+    // Run: flutter run --dart-define=FLAVOR=dev
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "▶ DEV",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define=FLAVOR=dev"
+            ]
+        },
+        {
+            "name": "▶ STAGING",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define=FLAVOR=staging"
+            ]
+        },
+        {
+            "name": "▶ PROD",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--dart-define=FLAVOR=prod"
+            ]
+        }
+    ]
+}

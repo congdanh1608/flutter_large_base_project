@@ -1,0 +1,10 @@
+// Prod flavor build settings — included by Debug-prod and Release-prod configurations.
+
+// App display name shown on home screen
+APP_DISPLAY_NAME = DTDigitalStudio
+
+// Production bundle ID
+PRODUCT_BUNDLE_IDENTIFIER = com.dtdigitalstudio.dt_digital_studio
+
+// Pass FLAVOR to Dart via dart-define (consumed by FlavorConfig)
+DART_DEFINES = FLAVOR=prod
