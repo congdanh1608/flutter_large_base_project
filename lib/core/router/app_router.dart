@@ -1,9 +1,9 @@
+import 'package:dt_digital_studio/features/auth/screen/login_screen.dart';
+import 'package:dt_digital_studio/features/splash/screen/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dt_digital_studio/core/router/route_names.dart';
-import 'package:dt_digital_studio/features/auth/screens/login_screen.dart';
-import 'package:dt_digital_studio/features/home/presentation/screens/home_screen.dart';
-import 'package:dt_digital_studio/features/splash/screens/splash_screen.dart';
+import 'package:dt_digital_studio/features/home/screen/home_screen.dart';
 import 'package:dt_digital_studio/shared/widgets/not_found_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {

@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:dt_digital_studio/core/router/route_names.dart';
-import 'package:dt_digital_studio/features/auth/providers/auth_provider.dart';
 import 'package:dt_digital_studio/shared/widgets/reactive_forms/custom_reactive_text_field.dart';
 import 'package:dt_digital_studio/shared/widgets/app_button.dart';
+
+import '../provider/auth_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});

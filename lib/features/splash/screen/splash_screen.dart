@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dt_digital_studio/core/router/route_names.dart';
-import 'package:dt_digital_studio/features/auth/providers/auth_provider.dart';
+
+import '../../auth/provider/auth_provider.dart';
 
 /// Splash screen — shows briefly while the app initialises and determines navigation target.
 class SplashScreen extends ConsumerStatefulWidget {
