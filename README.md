@@ -59,17 +59,20 @@ lib/
 │       └── app_logger.dart           # Flavor-aware logger wrapper
 ├── features/
 │   ├── auth/
-│   │   ├── providers/
+│   │   ├── provider/
 │   │   │   └── auth_provider.dart    # AuthNotifier (login, logout, getCurrentUser)
-│   │   └── screens/
-│   │       └── login_screen.dart     # ReactiveForm login UI
+│   │   ├── screen/
+│   │   │   └── login_screen.dart     # ReactiveForm login UI
+│   │   └── widget/                   # Feature-scoped widgets (reserved)
 │   ├── home/
-│   │   ├── presentation/screens/
+│   │   ├── provider/                 # (reserved)
+│   │   ├── screen/
 │   │   │   └── home_screen.dart      # User profile display
-│   │   └── screens/
-│   │       └── paging_example_screen.dart # Infinite scroll pagination example
+│   │   └── widget/                   # (reserved)
+│   ├── paging_example/
+│   │   └── paging_example_screen.dart # Infinite scroll pagination example
 │   └── splash/
-│       └── screens/
+│       └── screen/
 │           └── splash_screen.dart    # Auth check + redirect
 ├── shared/
 │   ├── providers/
@@ -156,29 +159,33 @@ flutter build ipa --dart-define=FLAVOR=prod --release
 
 ## 🏗 Adding a New Feature
 
-Follow the Clean Architecture pattern used by **`auth`**:
+Follow the pattern used by **`auth`**:
 
 ```
 lib/features/my_feature/
-├── data/
-│   ├── datasources/my_feature_remote_datasource.dart  # Dio calls
-│   ├── models/my_feature_model.dart                   # fromJson / toJson
-│   └── repositories/my_feature_repository_impl.dart  # wraps in ApiResult<T>
-├── domain/
-│   ├── entities/my_feature_entity.dart
-│   ├── repositories/my_feature_repository.dart        # abstract interface
-│   └── usecases/my_use_case.dart
-└── presentation/
-    ├── providers/my_feature_provider.dart              # Riverpod AsyncNotifier
-    ├── screens/my_feature_screen.dart
-    └── widgets/
+├── provider/
+│   └── my_feature_provider.dart   # State class + Riverpod Notifier
+├── screen/
+│   └── my_feature_screen.dart
+└── widget/                        # Feature-scoped widgets
 ```
 
-**Wire the provider:**
+**State + Notifier template:**
 ```dart
-final myFeatureRepoProvider = Provider<MyFeatureRepository>(
-      (_) => MyFeatureRepositoryImpl(),
-);
+class MyFeatureState extends BaseState {
+  const MyFeatureState({super.isLoading, super.errorMessage, this.data});
+  final MyModel? data;
+
+  MyFeatureState copyWith({...}) => MyFeatureState(...);
+}
+
+class MyFeatureNotifier extends Notifier<MyFeatureState> {
+  @override
+  MyFeatureState build() => const MyFeatureState();
+}
+
+final myFeatureProvider =
+    NotifierProvider<MyFeatureNotifier, MyFeatureState>(MyFeatureNotifier.new);
 ```
 
 ---

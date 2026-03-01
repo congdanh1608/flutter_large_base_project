@@ -18,6 +18,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _fade;
 
+  /// True once the minimum splash duration has elapsed.
+  bool _minDurationPassed = false;
+
   @override
   void initState() {
     super.initState();
@@ -25,14 +28,20 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         vsync: this, duration: const Duration(milliseconds: 800));
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _controller.forward();
-    _navigate();
+    Future<void>.delayed(const Duration(milliseconds: 1800)).then((_) {
+      if (!mounted) return;
+      _minDurationPassed = true;
+      _maybeNavigate();
+    });
   }
 
-  Future<void> _navigate() async {
-    await Future<void>.delayed(const Duration(milliseconds: 1800));
-    if (!mounted) return;
-    // Watch auth state and redirect accordingly
+  /// Navigates only when BOTH the minimum splash duration has passed AND
+  /// the auth check has finished. This prevents a race condition where a
+  /// slow API response causes an authenticated user to be sent to login.
+  void _maybeNavigate() {
+    if (!mounted || !_minDurationPassed) return;
     final authState = ref.read(authNotifierProvider);
+    if (authState.isLoading) return; // auth check still in flight
     if (authState.isAuthenticated) {
       context.goNamed(RouteNames.homeName);
     } else {
@@ -48,6 +57,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    // React to auth state changes so navigation fires as soon as auth is
+    // ready, even if the API responds after the 1800 ms timer.
+    ref.listen<AuthState>(authNotifierProvider, (_, next) {
+      if (!next.isLoading) _maybeNavigate();
+    });
+
     return Scaffold(
       body: FadeTransition(
         opacity: _fade,
